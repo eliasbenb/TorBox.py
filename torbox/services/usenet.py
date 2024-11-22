@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from requests import Response
 from typing_extensions import Optional
@@ -143,14 +143,14 @@ class UsenetService(BaseService):
 
     def is_cached(
         self,
-        usenet_hashes: list[str] | str,
+        usenet_hashes: List[str] | str,
         list_files: Optional[bool] = False,
         bypass_cache: Optional[bool] = False,
     ) -> Dict[str, Any]:
         """Check if usenet downloads are cached
 
         Args:
-            usenet_hashes (list[str] | str): Hash(es) to check
+            usenet_hashes (List[str] | str): Hash(es) to check
             list_files (Optional[bool]): Include file listings
             bypass_cache (Optional[bool]): Bypass cached response
 

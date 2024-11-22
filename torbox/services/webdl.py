@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from requests import Response
 from typing_extensions import Optional
@@ -124,14 +124,14 @@ class WebDLService(BaseService):
 
     def is_cached(
         self,
-        webdl_hashes: list[str] | str,
+        webdl_hashes: List[str] | str,
         list_files: Optional[bool] = False,
         bypass_cache: Optional[bool] = False,
     ) -> Dict[str, Any]:
         """Check if web downloads are cached
 
         Args:
-            webdl_hashes (list[str] | str): Hash(es) to check
+            webdl_hashes (List[str] | str): Hash(es) to check
             list_files (Optional[bool]): Include file listings
             bypass_cache (Optional[bool]): Bypass cached response
 

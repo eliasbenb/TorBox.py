@@ -1,5 +1,6 @@
 from .services import (
     BaseService,
+    IntegrationsServices,
     RSSService,
     TorrentsService,
     UsenetService,
@@ -13,7 +14,10 @@ class TorBox(BaseService):
     def __init__(self, api_key: str, base_url: str = "https://api.torbox.app/v1"):
         super().__init__(api_key, base_url)
 
-        self.rss = RSSService(self._api_key, self._base_url, self._session)
-        self.torrents = TorrentsService(self._api_key, self._base_url, self._session)
-        self.usenet = UsenetService(self._api_key, self._base_url, self._session)
-        self.webdl = WebDLService(self._api_key, self._base_url, self._session)
+        service_args = (api_key, base_url, self._session)
+
+        self.integrations = IntegrationsServices(*service_args)
+        self.rss = RSSService(*service_args)
+        self.torrents = TorrentsService(*service_args)
+        self.usenet = UsenetService(*service_args)
+        self.webdl = WebDLService(*service_args)

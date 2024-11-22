@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "torbox"
+version = "0.1.0"
+description = "Python wrapper for the TorBox API"
+readme = "README.md"
+authors = [
+    {name = "Elias Benbourenane", email = "eliasbenbourenane@gmail.com"},
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+requires-python = ">=3.7"
+dependencies = [
+    "click>=8.0.0",
+    "pydantic>=2.0.0",
+    "requests>=2.26.0",
+    "typing-extensions>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/eliasbenb/TorBox.py"
+
+[project.scripts]
+torbox = "torbox.cli:main"

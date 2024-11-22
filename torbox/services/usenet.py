@@ -27,6 +27,8 @@ class UsenetService(BaseService):
         if not response.ok:
             raise TorBoxUsenetError(data.get("detail", "Unknown usenet error"))
 
+        return data
+
     def create(
         self,
         link: Optional[str] = None,

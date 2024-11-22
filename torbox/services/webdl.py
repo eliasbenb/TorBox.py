@@ -25,6 +25,8 @@ class WebDLService(BaseService):
         if not response.ok:
             raise TorBoxWebDLError(data.get("detail", "Unknown web download error"))
 
+        return data
+
     def create(
         self,
         link: str,

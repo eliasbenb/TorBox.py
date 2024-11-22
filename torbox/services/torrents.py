@@ -39,6 +39,8 @@ class TorrentsService(BaseService):
         if not response.ok:
             raise TorBoxTorrentsError(data.get("detail", "Unknown torrents error"))
 
+        return data
+
     def create(
         self,
         magnet: Optional[str] = None,

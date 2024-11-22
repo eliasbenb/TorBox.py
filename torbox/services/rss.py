@@ -20,6 +20,8 @@ class RSSService(BaseService):
         if not response.ok:
             raise TorBoxRSSError(data.get("detail", "Unknown RSS error"))
 
+        return data
+
     def add_feed(
         self,
         url: str,

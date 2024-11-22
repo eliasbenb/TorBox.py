@@ -142,6 +142,7 @@ class TorrentsService(BaseService):
         if file_id:
             params["file_id"] = file_id
 
+        self._throttle_request()
         res = self._session.get(url, params=params)
         return self._handle_response(res)
 
@@ -170,8 +171,8 @@ class TorrentsService(BaseService):
         if torrent_id:
             params["id"] = torrent_id
 
+        self._throttle_request()
         res = self._session.get(url, params=params)
-        print(res.text)
         return self._handle_response(res)
 
     def list_queued(self) -> Dict[str, Any]:
@@ -222,6 +223,7 @@ class TorrentsService(BaseService):
             if not hash.isalnum() or len(hash) < 40:
                 raise ValueError(f"Invalid torrent hash: {hash}")
 
+        self._throttle_request()
         res = self._session.get(url, params=params)
         return self._handle_response(res)
 
@@ -258,6 +260,7 @@ class TorrentsService(BaseService):
 
         params = {"torrent_id": torrent_id, "type": export_type}
 
+        self._throttle_request()
         res = self._session.get(url, params=params)
         return self._handle_response(res)
 
@@ -275,5 +278,6 @@ class TorrentsService(BaseService):
 
         params = {"hash": torrent_hash, "timeout": timeout}
 
+        self._throttle_request()
         res = self._session.get(url, params=params)
         return self._handle_response(res)

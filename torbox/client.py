@@ -2,6 +2,7 @@ from .services import (
     BaseService,
     IntegrationsServices,
     RSSService,
+    StatsService,
     TorrentsService,
     UsenetService,
     WebDLService,
@@ -18,6 +19,7 @@ class TorBox(BaseService):
 
         self.integrations = IntegrationsServices(*service_args)
         self.rss = RSSService(*service_args)
+        self.stats = StatsService(*service_args)
         self.torrents = TorrentsService(*service_args)
         self.usenet = UsenetService(*service_args)
         self.webdl = WebDLService(*service_args)

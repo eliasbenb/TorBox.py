@@ -10,6 +10,7 @@ from .client import TorBox
 from .services import (
     # IntegrationsServices,
     RSSService,
+    StatsService,
     TorrentsService,
     UsenetService,
     WebDLService,
@@ -21,6 +22,7 @@ class TorBoxCLI:
         self.services = {
             # "integrations": IntegrationsServices,
             "rss": RSSService,
+            "stats": StatsService,
             "torrents": TorrentsService,
             "usenet": UsenetService,
             "webdl": WebDLService,

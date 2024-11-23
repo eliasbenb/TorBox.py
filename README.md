@@ -10,6 +10,8 @@ pip install torbox # pip install git+https://github.com/eliasbenb/TorBox.py.git 
 
 ## Supported API endpoints
 
+> Note: Anything marked as supported and tested should work. If something is marked as supportted but not tested, that means it was implemented but not tested to see if it's working as intended yet.
+
 | Endpoint                             | Supported | Tested |
 | ------------------------------------ | --------- | ------ |
 | `/api/torrents/createtorrent`        | ✔️         |        |

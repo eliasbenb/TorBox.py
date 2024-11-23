@@ -92,6 +92,8 @@ class BaseService:
                 raise TorBoxAuthenticationError(
                     data.get("detail", "Authentication failed")
                 )
+            if response.status_code == 404:
+                raise TorBoxError(data.get("detail", "Not found"))
             elif response.status_code == 429:
                 raise TorBoxRateLimitError(data.get("detail", "Rate limit exceeded"))
             elif response.status_code == 500:

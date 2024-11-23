@@ -1,3 +1,4 @@
+import os
 from enum import Enum, IntEnum
 from typing import Any, Dict, List
 
@@ -67,6 +68,8 @@ class TorrentsService(BaseService):
             AuthenticationError: When authentication fails
             RateLimitError: When rate limit is exceeded
             TorBoxError: When an unknown error occurs
+            ValueError: When invalid arguments are provided
+            FileNotFoundError: When a torrent file is passed and it does not exist
         """
         url = f"{self._base_url}/api/torrents/createtorrent"
 
@@ -74,18 +77,20 @@ class TorrentsService(BaseService):
             raise ValueError("Must provide either magnet or torrent file")
         if magnet and torrent_file:
             raise ValueError("Cannot provide both magnet and torrent file")
+        if torrent_file and not os.path.isfile(torrent_file):
+            raise FileNotFoundError("Torrent file does not exist")
 
-        files = {}
         data = {
             "magnet": magnet,
-            "torrent_file": ("torrent.torrent", open(torrent_file, "rb"))
-            if torrent_file
-            else None,
             "seed": seed,
             "allow_zip": allow_zip,
             "as_queued": as_queued,
             "name": name,
         }
+        files = {}
+        if torrent_file:
+            torrent_file = os.path.abspath(torrent_file)
+            files["file"] = ("torrent.torrent", open(torrent_file, "rb"))
 
         self._throttle_request(is_create=True)
         response = self._session.post(url, data=data, files=files)

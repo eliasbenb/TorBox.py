@@ -8,11 +8,12 @@ from typing_extensions import Any, Union
 
 from .client import TorBox
 from .services import (
-    # IntegrationsServices,
+    IntegrationsServices,
     RSSService,
     StatsService,
     TorrentsService,
     UsenetService,
+    UserService,
     WebDLService,
 )
 
@@ -20,11 +21,12 @@ from .services import (
 class TorBoxCLI:
     def __init__(self):
         self.services = {
-            # "integrations": IntegrationsServices,
+            "integrations": IntegrationsServices,
             "rss": RSSService,
             "stats": StatsService,
             "torrents": TorrentsService,
             "usenet": UsenetService,
+            "user": UserService,
             "webdl": WebDLService,
         }
 
@@ -54,7 +56,7 @@ class TorBoxCLI:
 
         for service_name, service_class in self.services.items():
             service_group = click.Group(
-                name=service_name, help=f"Manage {service_name} operations"
+                name=service_name, help=f"Run {service_name} operations"
             )
 
             for name, func in inspect.getmembers(

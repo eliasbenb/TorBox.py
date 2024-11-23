@@ -5,6 +5,7 @@ from .services import (
     StatsService,
     TorrentsService,
     UsenetService,
+    UserService,
     WebDLService,
 )
 
@@ -22,4 +23,5 @@ class TorBox(BaseService):
         self.stats = StatsService(*service_args)
         self.torrents = TorrentsService(*service_args)
         self.usenet = UsenetService(*service_args)
+        self.user = UserService(*service_args)
         self.webdl = WebDLService(*service_args)

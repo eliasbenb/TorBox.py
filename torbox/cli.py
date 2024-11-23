@@ -1,6 +1,7 @@
 import inspect
 import re
 from pprint import pformat
+from typing import get_args, get_origin
 
 import click
 from typing_extensions import Any, Union
@@ -69,15 +70,18 @@ class TorBoxCLI:
                                 if param.annotation != inspect._empty
                                 else Any
                             )
-                            if (
-                                hasattr(param_type, "__origin__")
-                                and param_type.__origin__ is Union
-                            ):
-                                param_type = param_type.__args__[
-                                    0
-                                ]  # Use the first type from Union
                             required = param.default == inspect._empty
                             param_help = ""
+
+                            # Handle Union types
+                            if get_origin(param_type) is Union:
+                                param_type = get_args(param_type)[0]
+
+                            # Handle list types
+                            is_list = False
+                            if get_origin(param_type) is list:
+                                is_list = True
+                                param_type = get_args(param_type)[0]
 
                             if doc_string:
                                 param_pattern = rf"\s+{param_name}\s*\((.*?)\):"
@@ -90,6 +94,7 @@ class TorBoxCLI:
                                     ["--" + param_name],
                                     required=required,
                                     type=param_type,
+                                    multiple=is_list,
                                     help=param_help,
                                 )
                             )
@@ -98,6 +103,14 @@ class TorBoxCLI:
                         @click.pass_context
                         def callback(ctx, **kwargs):
                             service = getattr(ctx.obj["client"], service_name)
+
+                            for key, value in kwargs.items():
+                                if isinstance(value, tuple):
+                                    if key == "torrent_hashes":
+                                        kwargs[key] = ",".join(value)
+                                    else:
+                                        kwargs[key] = list(value)
+
                             result = cmd_func(service, **kwargs)
                             if ctx.obj["pretty"]:
                                 click.echo(click.style(pformat(result), fg="green"))

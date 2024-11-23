@@ -35,10 +35,10 @@ class TorrentsExportType(str, Enum):
 class TorrentsService(BaseService):
     """TorBox torrent service API wrapper"""
 
-    def _handle_response(self, response: Response) -> Dict[str, Any]:
-        data = super()._handle_response(response)
+    def _handle_response(self, response: Response, **kwargs) -> Dict[str, Any]:
+        data = super()._handle_response(response, **kwargs)
         if not response.ok:
-            raise TorBoxTorrentsError(data.get("detail", "Unknown torrents error"))
+            raise TorBoxTorrentsError("Unknown torrents error")
 
         return data
 
@@ -269,7 +269,7 @@ class TorrentsService(BaseService):
 
         self._throttle_request()
         res = self._session.get(url, params=params)
-        return self._handle_response(res)
+        return self._handle_response(res, is_json=False)
 
     def info(self, torrent_hash: str, timeout: Optional[int] = 10) -> Dict[str, Any]:
         """Get detailed information about a torrent from the network

@@ -20,10 +20,10 @@ class WebDLControlOperation(str, Enum):
 class WebDLService(BaseService):
     """TorBox web download service API wrapper"""
 
-    def _handle_response(self, response: Response) -> Dict[str, Any]:
-        data = super()._handle_response(response)
+    def _handle_response(self, response: Response, **kwargs) -> Dict[str, Any]:
+        data = super()._handle_response(response, **kwargs)
         if not response.ok:
-            raise TorBoxWebDLError(data.get("detail", "Unknown web download error"))
+            raise TorBoxWebDLError("Unknown web download error")
 
         return data
 

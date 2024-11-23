@@ -22,10 +22,10 @@ class UsenetControlOperation(str, Enum):
 class UsenetService(BaseService):
     """TorBox usenet service API wrapper"""
 
-    def _handle_response(self, response: Response) -> Dict[str, Any]:
-        data = super()._handle_response(response)
+    def _handle_response(self, response: Response, **kwargs) -> Dict[str, Any]:
+        data = super()._handle_response(response, **kwargs)
         if not response.ok:
-            raise TorBoxUsenetError(data.get("detail", "Unknown usenet error"))
+            raise TorBoxUsenetError("Unknown usenet error")
 
         return data
 

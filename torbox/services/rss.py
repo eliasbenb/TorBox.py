@@ -15,10 +15,10 @@ class TorBoxRSSError(Exception):
 class RSSService(BaseService):
     """TorBox RSS service API wrapper"""
 
-    def _handle_response(self, response: Response) -> Dict[str, Any]:
-        data = super()._handle_response(response)
+    def _handle_response(self, response: Response, **kwargs) -> Dict[str, Any]:
+        data = super()._handle_response(response, **kwargs)
         if not response.ok:
-            raise TorBoxRSSError(data.get("detail", "Unknown RSS error"))
+            raise TorBoxRSSError("Unknown RSS error")
 
         return data
 

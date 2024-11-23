@@ -68,7 +68,9 @@ class BaseService:
 
         self._last_request_time = time.time()
 
-    def _handle_response(self, response: requests.Response) -> Dict[str, Any]:
+    def _handle_response(
+        self, response: requests.Response, is_json=True
+    ) -> Dict[str, Any]:
         """Handle API response and errors
 
         Args:
@@ -83,20 +85,21 @@ class BaseService:
             Dict[str, Any]: The API response
         """
         try:
-            data = response.json()
+            if is_json:
+                data = response.json()
+            else:
+                data = response.content
         except ValueError:
             raise TorBoxError("Invalid JSON response from API")
 
         if not response.ok:
             if response.status_code == 403:
-                raise TorBoxAuthenticationError(
-                    data.get("detail", "Authentication failed")
-                )
+                raise TorBoxAuthenticationError("Authentication failed")
             if response.status_code == 404:
-                raise TorBoxError(data.get("detail", "Not found"))
+                raise TorBoxError("Not found")
             elif response.status_code == 429:
-                raise TorBoxRateLimitError(data.get("detail", "Rate limit exceeded"))
+                raise TorBoxRateLimitError("Rate limit exceeded")
             elif response.status_code == 500:
-                raise TorBoxError(data.get("detail", "Internal server error"))
+                raise TorBoxError("Internal server error")
 
         return data

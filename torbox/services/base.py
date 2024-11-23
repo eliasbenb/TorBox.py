@@ -1,10 +1,11 @@
+import importlib.metadata
 import time
 from typing import Any, Dict
 
 import requests
 from typing_extensions import Optional
 
-from torbox.version import __version__
+_VERSION = importlib.metadata.version("torbox")
 
 
 class TorBoxError(Exception):
@@ -43,7 +44,7 @@ class BaseService:
         self._session.headers.update(
             {
                 "Authorization": f"Bearer {self._api_key}",
-                "User-Agent": f"TorBox.py/{__version__}",
+                "User-Agent": f"TorBox.py/{_VERSION}",
             }
         )
 

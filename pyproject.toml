@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "TorBox"
-version = "0.1.0"
+version = "0.1.0-alpha.0"
 description = "Python wrapper for the TorBox API"
 readme = "README.md"
 authors = [
